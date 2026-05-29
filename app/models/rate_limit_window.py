@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime, timezone
 
-from sqlalchemy import ForeignKey, Integer, UniqueConstraint
+from sqlalchemy import DateTime, ForeignKey, Integer, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.database import Base
@@ -17,5 +17,5 @@ class RateLimitWindow(Base):
     api_key_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("api_keys.id", ondelete="CASCADE"), nullable=False
     )
-    window_start: Mapped[datetime] = mapped_column(nullable=False)
+    window_start: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     request_count: Mapped[int] = mapped_column(Integer, default=1, nullable=False)
